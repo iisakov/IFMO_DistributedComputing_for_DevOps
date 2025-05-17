@@ -1,2 +1,6 @@
 inventory.ini
 group_vars/wp
+
+infra/.terraform.lock.hcl
+infra/.terraform
+infra/secrets
