@@ -57,14 +57,20 @@ ansible-playbook -i inventory.yml playbook.yml
 │   ├── main.tf              # Основная конфигурация
 │   ├── variables.tf         # Объявление переменных
 │   ├── outputs.tf           # Выходные IP-адреса
-│   └── terraform_exp.tfvars # Персональные переменные
+│   ├── ...
+|   └── terraform_exp.tfvars # Персональные переменные
 ├── ansible/
 │   ├── inventory.yml        # Автогенерируемый инвентарь
 │   ├── playbook.yml         # Основной плейбук
+│   ├── group_wars/          # Переменные
+│   │   ├── app.yml          # Переменные приложения
+│   │   ├── db_master.yml    # Переменные бд мастер
+│   │   └── db_slave.yml     # Переменные бд реплика
 │   └── roles/               # Роли для настройки
-│       ├── postgres_master/
-│       ├── postgres_slave/
-│       └── app_server/
+│       ├── docker/
+│       ├── db_master/
+│       ├── db_slave/
+│       └── app/
 └── README.md                # Этот файл
 ```
 
