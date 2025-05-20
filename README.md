@@ -16,19 +16,31 @@
 - Доступ к YC CLI (`yc`)
 
 ### 2. Настройка переменных
+перейдите в папку infrs
+```bash
+
+cd infra
+```
+
 Скопируйте шаблон переменных и укажите свои значения:
 ```bash
 
 cp terraform_exp.tfvars terraform.tfvars
-nano terraform_exp.tfvars  # отредактируйте файл
+nano terraform.tfvars  # отредактируйте файл
+```
+
+Или сразу создайте папку secrets, скопируйте и отредактируйте файл там
+```bash
+mkdir secrets
+cp terraform_exp.tfvars secrets/terraform.tfvars
+nano secrets/terraform.tfvars
 ```
 
 ### 3. Развёртывание инфраструктуры
 ```bash
 
-cd infra/
 terraform init
-terraform apply -auto-approve
+terraform apply -auto-approve # или terraform apply --var-file="secrets/terraform.tfvars" -auto-approve
 ```
 После выполнения:
 - В `infra/secrets/vm_ips.json` появятся IP-адреса ВМ

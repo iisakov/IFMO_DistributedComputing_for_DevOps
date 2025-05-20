@@ -1,5 +1,5 @@
-inventory.ini
-group_vars/wp
+ansible/inventory.ini
+ansible/group_vars/wp
 
 infra/.terraform.lock.hcl
 infra/.terraform
