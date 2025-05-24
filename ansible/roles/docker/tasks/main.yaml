@@ -51,10 +51,6 @@
   changed_when: false
   failed_when: docker_version_check.rc != 0
 
-- name: Создаём сеть для базы данных
-  community.docker.docker_network:
-    name: "{{ network }}"
-
 - name: Выводим версию Docker
   ansible.builtin.debug:
     msg: "Installed Docker version: {{ docker_version_check.stdout }}"

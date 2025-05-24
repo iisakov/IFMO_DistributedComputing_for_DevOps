@@ -1,4 +1,4 @@
-db_master_internal_host: 10.129.1.8
+db_master_internal_host: 10.129.1.28
 
 app_container_name: strapi
 app_image: strapi/strapi

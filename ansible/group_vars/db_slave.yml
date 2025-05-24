@@ -1,7 +1,7 @@
 db_replication_user: artisan_slave_user     #
 db_replication_password: artisan_slave_pass #
 db_replication_mode: 'slave'                #
-db_master_internal_host: 10.129.1.8         #
+db_master_internal_host: 10.129.1.28        #
 
 db_username: artisan                        #
 db_password: artisan                        #
