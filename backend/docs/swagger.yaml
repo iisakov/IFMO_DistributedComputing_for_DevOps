@@ -1,5 +1,13 @@
 basePath: /
-host: 0.0.0.0:8080
+definitions:
+  model.Task:
+    properties:
+      taskId:
+        type: integer
+      taskName:
+        type: string
+    type: object
+host: 127.0.0.1:8080
 info:
   contact:
     email: by@artisan.io
@@ -11,5 +19,50 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: app by artisan
   version: "0.1"
-paths: {}
+paths:
+  /api/task/:
+    post:
+      description: Метод позволяет записать одну задачу на пользователя
+      parameters:
+      - description: Задача
+        in: body
+        name: id
+        required: true
+        schema:
+          $ref: '#/definitions/model.Task'
+          type: object
+      responses:
+        "200": {}
+      summary: Создать задачу
+  /api/task/{id}:
+    delete:
+      description: Метод позволяет удалить одну задачу
+      parameters:
+      - description: Задача
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200": {}
+      summary: Удалить задачу
+  /api/task/sim/{count}:
+    post:
+      description: Метод позволяет симулировать создание и удаление задач определённое
+        количество раз
+      parameters:
+      - description: Количество задач
+        in: path
+        name: count
+        required: true
+        type: integer
+      responses:
+        "200": {}
+      summary: Симулировать активность
+  /api/user/:
+    get:
+      description: Метод позволяет получить всех пользователей
+      responses:
+        "200": {}
+      summary: Получить пользователей по id
 swagger: "2.0"

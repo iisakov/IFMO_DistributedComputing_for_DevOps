@@ -7,7 +7,7 @@
     env:
       DATABASE_CLIENT: "{{ app_database_client }}"
       DATABASE_HOST: "{{ db_master_internal_host }}"
-      DATABASE_PORT: "{{ db_port }}"
+      DATABASE_PORT: "{{ db_ext_port }}"
       DATABASE_NAME: "{{ db_database }}"
       DATABASE_USERNAME: "{{ db_username }}"
       DATABASE_PASSWORD: "{{ db_password }}"

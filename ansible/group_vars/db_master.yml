@@ -7,7 +7,8 @@ db_password: artisan                          #
 db_database: artisan                          #
 db_postgres_user: postgres                    #
 db_postgres_password: postgres                #
-db_port: '5432'                               #
+db_int_port: '5432'                           #
+db_ext_port: '5432'                           #
 
 db_volume: pg_master_data                     #
 db_volume_path_inside: /db_master/postgresql  #

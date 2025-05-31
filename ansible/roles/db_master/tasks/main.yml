@@ -19,21 +19,12 @@
     volumes:
       - "{{ db_volume }}:{{ db_volume_path_inside }}"
     ports:
-      - "{{ db_port }}:{{ db_port }}"
+      - "{{ db_ext_port }}:{{ db_int_port }}"
 
 - name: Ждём создания контейнера
   community.docker.docker_container_info:
     name: "{{ db_container_name }}"
   register: db_container_info
-
-- name: Проверить healthcheck контейнера
-  community.docker.docker_container_info:
-    name: "{{ db_container_name }}"
-  register: container_info
-
-- name: Вывести статус healthcheck
-  debug:
-    var: container_info.container.State.Health.Status
 
 - name: Ждём доступа к порту PostgreSQL
   wait_for:

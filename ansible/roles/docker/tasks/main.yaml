@@ -45,6 +45,10 @@
     groups: docker
     append: true
 
+- name: Создаём сеть в docker
+  community.docker.docker_network:
+    name: "{{ docker_network }}"
+
 - name: Ещё раз убеждаемся что Docker установлен
   ansible.builtin.command: docker --version
   register: docker_version_check

@@ -14,7 +14,87 @@
         },
         "version": "0.1"
     },
-    "host": "0.0.0.0:8080",
+    "host": "127.0.0.1:8080",
     "basePath": "/",
-    "paths": {}
+    "paths": {
+        "/api/task/": {
+            "post": {
+                "description": "Метод позволяет записать одну задачу на пользователя",
+                "summary": "Создать задачу",
+                "parameters": [
+                    {
+                        "description": "Задача",
+                        "name": "id",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.Task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/api/task/sim/{count}": {
+            "post": {
+                "description": "Метод позволяет симулировать создание и удаление задач определённое количество раз",
+                "summary": "Симулировать активность",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Количество задач",
+                        "name": "count",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/api/task/{id}": {
+            "delete": {
+                "description": "Метод позволяет удалить одну задачу",
+                "summary": "Удалить задачу",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Задача",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/api/user/": {
+            "get": {
+                "description": "Метод позволяет получить всех пользователей",
+                "summary": "Получить пользователей по id",
+                "responses": {
+                    "200": {}
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.Task": {
+            "type": "object",
+            "properties": {
+                "taskId": {
+                    "type": "integer"
+                },
+                "taskName": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }

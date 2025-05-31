@@ -35,6 +35,13 @@ resource "yandex_vpc_security_group" "infra_db_sg" {
     # v4_cidr_blocks = ["${data.yandex_compute_instance.vm_app_1_ip.network_interface.0.nat_ip_address}/32"]
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress {
+    protocol       = "TCP"
+    port           = 9187
+    # v4_cidr_blocks = ["${data.yandex_compute_instance.vm_app_1_ip.network_interface.0.nat_ip_address}/32"]
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "yandex_vpc_security_group" "infra_app_sg" {
@@ -55,6 +62,12 @@ resource "yandex_vpc_security_group" "infra_app_sg" {
   ingress {
     protocol       = "TCP"
     port           = "80"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    protocol       = "TCP"
+    port           = "9090"
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
 }

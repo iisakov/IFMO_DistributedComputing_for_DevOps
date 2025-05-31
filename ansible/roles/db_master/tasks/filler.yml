@@ -1,0 +1,17 @@
+---
+- name: Создаём таблицы в мастер бд
+  community.docker.docker_container_exec:
+    container: "{{ db_container_name }}"
+    command: >
+      psql -U {{ db_username }} -d {{ db_database }} -h localhost -c
+      "create table if not exists "task" (
+        id serial primary key,
+        name varchar
+      );
+      create table if not exists "app_user" (
+        id serial primary key,
+        login varchar
+      );
+      "
+    env:
+      PGPASSWORD: "{{ db_password }}"

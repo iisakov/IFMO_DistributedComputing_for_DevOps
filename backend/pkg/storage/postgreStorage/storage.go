@@ -15,22 +15,31 @@ func NewPostgreStorage(db *sql.DB) *PostgreStorage {
 	return &PostgreStorage{db: db}
 }
 
-// SelectUser возвращает пользователя по ID
-func (s *PostgreStorage) SelectUser(userID int) (model.User, error) {
-	var user model.User
-	query := `SELECT user_id, user_login FROM user WHERE id = $1`
+// SelectUsers возвращает пользователя по ID
+func (s *PostgreStorage) SelectUsers() (model.Users, error) {
+	var users model.Users
+	query := `SELECT id, login FROM app_user`
 
-	err := s.db.QueryRow(query, userID).Scan(&user.UserID, &user.UserLogin)
+	rows, err := s.db.Query(query)
 	if err != nil {
-		return user, err
+		return users, err
 	}
-	return user, nil
+	for rows.Next() {
+		u := model.User{}
+		err = rows.Scan(&u.UserID, &u.UserLogin)
+		if err != nil {
+			return users, err
+		}
+		users = append(users, u)
+	}
+
+	return users, nil
 }
 
 // InsertTask добавляет новую задачу и возвращает её ID
 func (s *PostgreStorage) InsertTask(task model.Task) (int, error) {
 	var id int
-	query := `INSERT INTO task (task_id, task_name) VALUES ($1, $2) RETURNING id`
+	query := `INSERT INTO task (id, name) VALUES ($1, $2) RETURNING id`
 
 	err := s.db.QueryRow(query, task.TaskID, task.TaskName).Scan(&id)
 	if err != nil {

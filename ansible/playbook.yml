@@ -2,6 +2,7 @@
 - name: Ставим докер на все три машины
   hosts: db_master, db_slave, app
   become: true
+  tags: docker
 
   roles:
     - docker
@@ -10,24 +11,44 @@
 - name: Ставим PostgreSQL на db_master
   hosts: db_master
   become: true
+  tags: postgres_master
 
-  roles:
-    - db_master
+  tasks:
+    - include_role:
+        name: db_master
+        tasks_from: main.yml
+    - include_role:
+        name: master_postgres_exporter
+  vars_files:
+    - group_vars/master_postgres_exporter.yml
 
 
 - name: Ставим PostgreSQL на db_slave
   hosts: db_slave
   become: true
+  tags: postgres_slave
 
   roles:
     - db_slave
 
+- name: Создание рабочих таблиц в БД
+  hosts: db_master
+  become: true
+  tags: db_tables
 
-- name: Ставим Django на app
+  tasks:
+    - include_role:
+        name: db_master
+        tasks_from: filler.yml
+
+- name: Ставим Приложение на app
   hosts: app
+  become: true
+  tags: app
   vars_files:
     - group_vars/db_master.yml
-  become: true
+    - group_vars/prometheus.yml
 
   roles:
     - app
+    - prometheus

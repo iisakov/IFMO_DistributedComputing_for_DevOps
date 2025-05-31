@@ -7,7 +7,7 @@ import (
 var DB Storage
 
 type Storage interface {
-	SelectUser(int) (model.User, error)
+	SelectUsers() (model.Users, error)
 
 	InsertTask(model.Task) (int, error)
 	DeleteTask(int) (int, error)

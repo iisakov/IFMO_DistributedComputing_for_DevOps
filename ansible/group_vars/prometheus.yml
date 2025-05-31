@@ -1,0 +1,8 @@
+prometheus_config_path: /etc/prometheus
+prometheus_data_path: /opt/prometheus
+prometheus_outside_port: 9090
+prometheus_container_name: prometheus
+prometheus_image: prom/prometheus:latest
+prometheus_copy_dest: /opt/prometheus/prometheus.yml
+prometheus_check_delay: 30
+prometheus_check_retries: 10

@@ -15,7 +15,7 @@ import (
 // @contact.email  by@artisan.io
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
-// @host      0.0.0.0:8080
+// @host      127.0.0.1:8080
 // @BasePath  /
 func main() {
 	r := config.InitEngine()
