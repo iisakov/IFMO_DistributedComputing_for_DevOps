@@ -18,7 +18,7 @@
     volumes:
       - "{{ db_volume }}:{{ db_volume_path_inside }}"
     ports:
-      - "{{ db_ext_port }}:{{ db_int_port }}"
+      - "{{ db_ext_port }}:5432"
 
 - name: Ждём создания контейнера
   community.docker.docker_container_info:
@@ -28,7 +28,7 @@
 - name: Ждём доступа к порту PostgreSQL
   wait_for:
     host: "{{ ansible_host }}"
-    port: 5432
+    port: "{{ db_ext_port }}"
     delay: 2
     timeout: 60
     state: started
