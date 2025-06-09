@@ -48,7 +48,9 @@
   vars_files:
     - group_vars/db_master.yml
     - group_vars/prometheus.yml
+    - group_vars/grafana.yml
 
   roles:
     - app
     - prometheus
+    - grafana

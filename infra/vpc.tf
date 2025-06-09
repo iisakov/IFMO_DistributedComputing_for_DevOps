@@ -70,4 +70,10 @@ resource "yandex_vpc_security_group" "infra_app_sg" {
     port           = "9090"
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress {
+    protocol       = "TCP"
+    port           = "3000"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
 }

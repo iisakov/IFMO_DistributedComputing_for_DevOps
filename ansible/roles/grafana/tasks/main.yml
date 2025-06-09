@@ -1,0 +1,45 @@
+---
+- name: Create folder
+  ansible.builtin.file:
+    path: "/opt/grafana/dashboards/"
+    state: directory
+    mode: '0755'
+
+- name: Copy Grafana config
+  ansible.builtin.copy:
+    src: "../files/datasource.yml"
+    dest: "/opt/grafana/datasource.yml"
+
+- name: Copy Grafana dashboard
+  ansible.builtin.copy:
+    src: "../files/default_dashboard.json"
+    dest: "/opt/grafana/dashboards/dashboard.json"
+
+- name: Run Grafana container
+  community.docker.docker_container:
+    name: grafana
+    image: grafana/grafana:latest
+    restart_policy: always
+    env:
+      GF_SECURITY_ADMIN_USER: "{{grafana_user}}"
+      GF_SECURITY_ADMIN_PASSWORD: "{{grafana_password}}"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: "/etc/grafana/provisioning/dashboards/dashboard.json"
+    ports:
+      - "3000:3000"
+    volumes:
+      - "grafana_data:/var/lib/grafana"
+      - "/opt/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro"
+      - "/opt/grafana/dashboards/:/etc/grafana/provisioning/dashboards/"
+    networks:
+      - name: "{{ docker_network }}"
+
+- name: Waiting for Grafana to become available
+  ansible.builtin.uri:
+    url: "http://{{ hostvars[inventory_hostname].ansible_host }}:3000"
+    method: GET
+    status_code: 200
+  register: grafana_check
+  retries: 30
+  delay: 10
+  until: grafana_check.status == 200
